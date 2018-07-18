@@ -1,0 +1,205 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# Copyright © 2007-2018 ANSSI. All Rights Reserved.
+###################################################
+## fbpanel configuration file for CLIP-LIVECD ##
+###################################################
+
+Global {
+    edge = top
+    allign = left
+    margin = 0
+    widthType = percent
+    width = 100
+    heightType = pixel
+    height = 32
+    roundCorners = false
+    transparent = false
+    tintColor = #ffffff
+    alpha = 39
+    autoHide = false
+    heightWhenHidden = 2
+    setpartialstrut = true
+    setdocktype = true
+
+}
+
+Plugin {
+    type = menu
+    config {
+
+        image = /usr/share/icons/clip.png
+
+        item {
+            name = Installeur CLIP
+            image = /usr/share/icons/advanced.png
+            action = /usr/bin/clip-install-gui
+        }
+
+        item {
+            name = Liste des périphériques
+            image = /usr/share/icons/device-notifier.png
+            action = /usr/sbin/lshw -X
+        }
+
+        item {
+            name = Clonage du média d'installation
+            image = /usr/share/icons/drive-removable-media-usb.png
+            action = /sbin/clone-livecd.sh
+        }
+
+        item {
+            name = Terminal
+            image = /usr/share/icons/terminal.png
+            action = /usr/bin/xterm -fg black -bg white -T Terminal -e /bin/bash -l
+        }
+
+        item {
+            name = Aide de l'installeur CLIP
+            image = /usr/share/icons/system-help.png
+            action = /usr/bin/clip-viewer /usr/share/clip-livecd/help.html
+        }
+
+        separator {
+        }
+        menu {
+            name = Quitter
+            image = /usr/share/icons/exit.png
+
+            item {
+                name = Redémarrer le système
+                image = /usr/share/icons/system-reboot.png
+                action = /usr/bin/reboot.sh "reboot"
+            }
+
+            item {
+                name = Arrêter le système
+                image = /usr/share/icons/system-shutdown.png
+                action = /usr/bin/reboot.sh "halt"
+            }
+        }
+    }
+}
+
+Plugin {
+        type = space
+        config {
+                size = 5
+        }
+}
+
+Plugin {
+    type = menu
+
+    config {
+        image = /usr/share/icons/preferences-system.png
+
+        menu {
+                name = Paramétrage post-installation
+                image = /usr/share/icons/preferences-other.png
+
+                item {
+                    name = Configurer les utilisateurs
+                    image = /usr/share/icons/users.png
+                    action = /usr/bin/clip-postinst-user
+                }
+
+                item {
+                    name = Configurer l'attribution des périphériques
+                    image = /usr/share/icons/preferences-other.png
+                    action = /usr/bin/clip-postinst-devices
+                }
+
+                item {
+                    name = Configurer les profils réseau
+                    image = /usr/share/icons/preferences-system-network.png
+                    action = /usr/bin/clip-postinst-network
+                }
+
+                item {
+                    name = Configurer les adresses internes
+                    image = /usr/share/icons/network.png
+                    action = /usr/bin/clip-postinst-netconst
+                }
+
+                item {
+                    name = Configurer les sources de mises à jour
+                    image = /usr/share/icons/download-sources.png
+                    action = /usr/bin/clip-postinst-download
+                }
+
+                item {
+                    name = Configurer l'audit
+                    image = /usr/share/icons/audit.png
+                    action = /usr/bin/clip-postinst-audit
+                }
+        }
+
+        item {
+            name = Editer les profils d'installation
+            image = /usr/share/icons/edit.png
+            action = /usr/bin/clip-install-config /mnt/cdrom/config
+        }
+
+        item {
+            name = Configurer la date et l'heure
+            image = /usr/share/icons/date.png
+            action = /usr/bin/clip-config -t -c /dev/null
+        }
+    }
+}
+
+###################################################
+## fbpanel common plugins for CLIP-RM ##
+###################################################
+
+Plugin {
+        type = space
+        config {
+                size = 30
+        }
+}
+
+Plugin {
+    type = taskbar
+    expand = true
+    config {
+        ShowIconified = true
+        ShowMapped = true
+        ShowAllDesks = false
+        tooltips = true
+        IconsOnly = false
+        MaxTaskWidth = 250
+    }
+}
+
+Plugin {
+        type = space
+        config {
+                size = 30
+        }
+}
+
+Plugin {
+    type = batt
+    config {
+        HideIfNoBattery = 1
+        Size = 40
+        AlarmCommand = /usr/bin/Xdialog --title "Alerte batterie" --msgbox "Batterie vide !" 0 0
+    }
+}
+
+Plugin {
+        type = space
+        config {
+                size = 8
+        }
+}
+
+Plugin {
+    type = dclock
+    config {
+        ClockFmt = %R
+        TooltipFmt = %A %x
+        Action = /usr/bin/Xdialog --title Calendrier --no-cancel --ok-label Fermer --calendar Calendrier 20 40
+    }
+}

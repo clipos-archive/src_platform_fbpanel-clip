@@ -1,0 +1,9 @@
+include %%topdir%%/config.mk
+
+SRCS = batt.c 
+LIBTARGET = batt.so
+LDFLAGSX = -lpthread
+install:
+	$(install) 755 $(LIBDIR)/fbpanel 755 $(LIBTARGET)
+
+include %%topdir%%/rules.mk
